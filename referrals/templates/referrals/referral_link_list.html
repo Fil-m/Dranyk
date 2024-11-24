@@ -1,0 +1,49 @@
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Referral Links List</title>
+</head>
+<body>
+    <h1>My Referral Links</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Referral Code</th>
+                <th>Original URL</th>
+                <th>Click Count</th>
+                <th>Sub Links</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in referral_link_data %}
+                <tr>
+                    <td>{{ item.link.referral_code }}</td>
+                    <td><a href="{{ item.link.original_url }}" target="_blank">{{ item.link.original_url }}</a></td>
+                    <td>{{ item.click_count }}</td>
+                    <td>
+                        <ul>
+                            {% for sub_link in item.sub_links %}
+                                <li><a href="{{ sub_link.url }}">{{ sub_link.url }}</a></li>
+                            {% empty %}
+                                <li>No sub-links.</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">No referral links found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+
+
+{% endblock %}
